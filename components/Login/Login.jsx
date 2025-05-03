@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   username: yup
@@ -24,9 +23,10 @@ const schema = yup.object().shape({
     .max(50, "Password cannot exceed 50 characters"),
 });
 
-
 const Login = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -37,14 +37,13 @@ const navigate = useNavigate();
     resolver: yupResolver(schema),
   });
 
-  
   const onSubmit = (data) => {
     localStorage.setItem("user", JSON.stringify(data.username));
 
     window.dispatchEvent(new Event("storage"));
 
     reset();
-    navigate("/");
+    navigate(from, { replace: true });
   };
 
   return (
@@ -96,7 +95,7 @@ const navigate = useNavigate();
               variant="primary"
               type="submit"
               className="w-100"
-            //   onClick={() => navigate('/')}
+              //   onClick={() => navigate('/')}
             >
               Login
             </Button>

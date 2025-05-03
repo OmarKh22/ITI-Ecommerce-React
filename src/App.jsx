@@ -9,21 +9,26 @@ import ProductDetails from "../components/ProductDetails/ProductDetails";
 import Footer from "../components/Footer/Footer";
 import NotFound from "../components/NotFound/NotFound";
 import Login from "../components/Login/Login";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
     <>
       <Navbar />
-<Container className="mt-3">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/productDetails/:id" element={<ProductDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-</Container>
-<Footer />
+      <Container className="mt-3">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/productDetails/:id" element={<ProductDetails />} />
+          </Route>
+
+        </Routes>
+      </Container>
+      <Footer />
     </>
   );
 }
