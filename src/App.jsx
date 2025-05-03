@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
 import Footer from "../components/Footer/Footer";
 import NotFound from "../components/NotFound/NotFound";
+import Login from "../components/Login/Login";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 </Container>
