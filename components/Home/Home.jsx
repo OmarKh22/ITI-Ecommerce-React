@@ -1,37 +1,49 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap';
+import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Riple } from 'react-loading-indicators';
-import { useNavigate } from 'react-router-dom';
+import { Riple } from "react-loading-indicators";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const [loading , setLoading] = useState(true)
-    const [error, setError] = useState(null);
-    const [data , setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState([]);
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        const fetchData = async()=>{
-            try {
-                const res = await axios.get('https://fakestoreapi.com/products');
-                const data = res.data
-                setData(data)
-            } catch (error) {
-                setError(error.message)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchData();
-        console.log(data)
-    } , [])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("https://fakestoreapi.com/products");
+        const data = res.data;
+        setData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+    console.log(data);
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    return data.filter((element) => element.title.includes(search));
+  }, [data, search]);
 
   return (
     <div>
       <h2 className="text-center p-3">Choose your product</h2>
+      <input
+        className="form-control mb-3 shadow-sm"
+        type="text"
+        placeholder="Search products..."
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
+      />
       <div>
         {loading ? (
           <div className="loading-container d-flex justify-content-center align-items-center min-vh-100">
@@ -39,7 +51,7 @@ const Home = () => {
           </div>
         ) : (
           <Row xs={1} md={4} className="g-4 text-center">
-            {data.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <Col key={index}>
                 <Card
                   style={{ width: "18rem", minHeight: "400px" }}
@@ -75,8 +87,6 @@ const Home = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Home
-
-
+export default Home;
