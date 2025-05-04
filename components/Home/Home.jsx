@@ -6,38 +6,40 @@ import Card from "react-bootstrap/Card";
 import { FaSearch } from "react-icons/fa";
 import { Riple } from "react-loading-indicators";
 import { useNavigate } from "react-router-dom";
+import useProducts from "../../Hooks/useProducts";
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState([]);
+  const { products: filteredProducts, loading, error } = useProducts(search);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("https://fakestoreapi.com/products");
-        const data = res.data;
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-    console.log(data);
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get("https://fakestoreapi.com/products");
+  //       const data = res.data;
+  //       setData(data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  //   console.log(data);
+  // }, []);
 
-  const filteredProducts = useMemo(() => {
-    return data.filter((element) => element.title.includes(search));
-  }, [data, search]);
+  // const filteredProducts = useMemo(() => {
+  //   return data.filter((element) => element.title.includes(search));
+  // }, [data, search]);
 
   return (
     <div>
-      <h2 className="text-center p-3 ">Choose your product</h2>
+      <h2 className="text-center p-3">Explore Our Latest Products</h2>
       <div className="input-group mb-3 shadow-sm">
         <span className="input-group-text bg-white border-end-0">
           <FaSearch />
@@ -55,6 +57,8 @@ const Home = () => {
           <div className="loading-container d-flex justify-content-center align-items-center min-vh-100">
             <Riple color="#141514" size="medium" text="" textColor="" />
           </div>
+        ) : filteredProducts.length === 0 ? (
+          <h1 className="text-center text-danger mt-5">Product not found</h1>
         ) : (
           <Row xs={1} md={4} className="g-4 text-center">
             {filteredProducts.map((product, index) => (
