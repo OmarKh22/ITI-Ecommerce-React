@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Navbarr = () => {
   const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ const Navbarr = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    toast.info("You have been logged out.");
     setUser(null);
   };
 

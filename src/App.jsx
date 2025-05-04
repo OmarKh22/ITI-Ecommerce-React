@@ -10,6 +10,7 @@ import Footer from "../components/Footer/Footer";
 import NotFound from "../components/NotFound/NotFound";
 import Login from "../components/Login/Login";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -25,10 +26,20 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
           </Route>
-
         </Routes>
       </Container>
       <Footer />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
     </>
   );
 }

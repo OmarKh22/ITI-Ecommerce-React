@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   username: yup
@@ -41,7 +42,7 @@ const Login = () => {
     localStorage.setItem("user", JSON.stringify(data.username));
 
     window.dispatchEvent(new Event("storage"));
-
+    toast.success("Login successful!");
     reset();
     navigate(from, { replace: true });
   };

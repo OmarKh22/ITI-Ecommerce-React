@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { FaSearch } from "react-icons/fa";
 import { Riple } from "react-loading-indicators";
 import { useNavigate } from "react-router-dom";
 
@@ -36,14 +37,19 @@ const Home = () => {
 
   return (
     <div>
-      <h2 className="text-center p-3">Choose your product</h2>
-      <input
-        className="form-control mb-3 shadow-sm"
-        type="text"
-        placeholder="Search products..."
-        onChange={(e) => setSearch(e.target.value)}
-        value={search}
-      />
+      <h2 className="text-center p-3 ">Choose your product</h2>
+      <div className="input-group mb-3 shadow-sm">
+        <span className="input-group-text bg-white border-end-0">
+          <FaSearch />
+        </span>
+        <input
+          type="text"
+          className="form-control border-start-0"
+          placeholder="Search products..."
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
+      </div>
       <div>
         {loading ? (
           <div className="loading-container d-flex justify-content-center align-items-center min-vh-100">
