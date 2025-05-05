@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Card, Button, Row, Col, Image } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useCart } from "../../Context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
+  const {addToCart} = useCart();
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchProduct() {
@@ -42,9 +45,14 @@ const ProductDetails = () => {
               Price : {product.price}$
             </div>
             <div className="mt-3">{product.description}</div>
-            <Button variant="primary" className="mt-5">
-              Add To Cart
-            </Button>
+            <div className="d-flex justify-content-center gap-3 mt-5">
+              <Button variant="primary" onClick={() => addToCart(product)}>
+                Add To Cart
+              </Button>
+              <Button variant="secondary" onClick={() => navigate("/")}>
+                Back To Products
+              </Button>
+            </div>
           </Col>
         </Row>
       ) : (

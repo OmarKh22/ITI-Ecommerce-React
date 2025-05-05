@@ -13,30 +13,35 @@ import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import { ProductProvider } from "../Context/ProductContext";
 import { AuthProvider } from "../Context/AuthContext";
+import { CartProvider } from "../Context/CartContext";
+import Cart from "../components/Cart/Cart";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <ProductProvider>
-          <Navbar />
-          <Container className="mt-3">
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="*" element={<NotFound />} />
+        <CartProvider>
+          <ProductProvider>
+            <Navbar />
+            <Container className="mt-3">
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="*" element={<NotFound />} />
 
-              <Route element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route
-                  path="/productDetails/:id"
-                  element={<ProductDetails />}
-                />
-              </Route>
-            </Routes>
-          </Container>
-          <Footer />
-        </ProductProvider>
+                <Route element={<PrivateRoute />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route
+                    path="/productDetails/:id"
+                    element={<ProductDetails />}
+                  />
+                  <Route path="/cart" element={<Cart />} />
+                </Route>
+              </Routes>
+            </Container>
+            <Footer />
+          </ProductProvider>
+        </CartProvider>
       </AuthProvider>
       <ToastContainer
         position="top-right"
