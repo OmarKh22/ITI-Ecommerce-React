@@ -9,71 +9,76 @@ import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../Context/ProductContext";
 
 const Home = () => {
-  const [search, setSearch] = useState([]);
-  const { products: filteredProducts, loading, error } = useProducts();
-
-  const navigate = useNavigate();
+  const { products, loading, search, setSearch } = useProducts();
+  const navigate = useNavigate()
 
   return (
-    <div>
-      <h2 className="text-center p-3">Explore Our Latest Products</h2>
-      <div className="input-group mb-3 shadow-sm">
-        <span className="input-group-text bg-white border-end-0">
+    <div className="container py-5">
+      <h2 className="text-center mb-4 text-primary">
+        Explore Our Latest Products
+      </h2>
+
+      <div className="input-group mb-4 shadow-sm ">
+        <span className="input-group-text bg-white border-end-0 ">
           <FaSearch />
         </span>
         <input
           type="text"
-          className="form-control border-start-0"
+          className="form-control border-start-0 "
           placeholder="Search products..."
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
       </div>
-      <div>
-        {loading ? (
-          <div className="loading-container d-flex justify-content-center align-items-center min-vh-100">
-            <Riple color="#141514" size="medium" text="" textColor="" />
-          </div>
-        ) : filteredProducts.length === 0 ? (
-          <h1 className="text-center text-danger mt-5">Product not found</h1>
-        ) : (
-          <Row xs={1} md={4} className="g-4 text-center">
-            {filteredProducts.map((product, index) => (
-              <Col key={index}>
-                <Card
-                  style={{ width: "18rem", minHeight: "400px" }}
-                  className="bg-dark text-white"
-                >
-                  <Card.Img
-                    variant="top"
-                    src={product.image}
-                    className="mx-auto d-block mt-3 "
-                    style={{
-                      width: "200px",
-                      height: "180px",
-                      objectFit: "contain",
-                    }}
-                  />
-                  <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Text>
-                      {product.description.slice(0, 100)} ...
-                    </Card.Text>
+
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+          <Riple color="#007bff" size="medium" />
+        </div>
+      ) : products.length === 0 ? (
+        <h1 className="text-center text-danger mt-5">Product not found</h1>
+      ) : (
+        <Row xs={1} md={2} lg={4} className="g-4">
+          {products.map((product, index) => (
+            <Col key={index}>
+              <Card
+                className="bg-dark text-white rounded-lg shadow-sm"
+                style={{ height: "100%" }}
+              >
+                <Card.Img
+                  variant="top"
+                  src={product.image}
+                  className="mx-auto d-block mt-3"
+                  style={{
+                    width: "200px",
+                    height: "180px",
+                    objectFit: "contain",
+                  }}
+                />
+                <Card.Body>
+                  <Card.Title className="text-center">
+                    {product.title}
+                  </Card.Title>
+                  <Card.Text className="text-center">
+                    {product.description.slice(0, 100)}...
+                  </Card.Text>
+                  <div className="text-center">
                     <Button
                       variant="primary"
                       onClick={() => navigate(`/productDetails/${product.id}`)}
                     >
                       More Details
                     </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        )}
-      </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
   );
 };
+
 
 export default Home;
