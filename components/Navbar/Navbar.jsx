@@ -3,32 +3,34 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
 
 const Navbarr = () => {
-  const [user, setUser] = useState(null);
+  const {user , logout} = useAuth()
+  // const [user, setUser] = useState(null);
 
 
-  useEffect(() => {
-    const loadUser = () => {
-      const storedUser = localStorage.getItem("user");
-      setUser(storedUser ? JSON.parse(storedUser) : null);
-    };
+  // useEffect(() => {
+  //   const loadUser = () => {
+  //     const storedUser = localStorage.getItem("user");
+  //     setUser(storedUser ? JSON.parse(storedUser) : null);
+  //   };
 
-    loadUser(); 
+  //   loadUser(); 
 
 
-    window.addEventListener("storage", loadUser);
+  //   window.addEventListener("storage", loadUser);
 
-    return () => {
-      window.removeEventListener("storage", loadUser);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("storage", loadUser);
+  //   };
+  // }, []);
 
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    logout();
     toast.info("You have been logged out.");
-    setUser(null);
+    // setUser(null);
   };
 
   return (
@@ -48,7 +50,9 @@ const Navbarr = () => {
             </Nav.Link>
           </Nav>
           <Nav className="ms-auto align-items-center">
-            {user && <span className="text-white me-2">Hi / {user}</span>}
+            {user && (
+              <span className="text-white me-2">Welcom / {user}</span>
+            )}
             {user ? (
               <Button
                 variant="outline-light"

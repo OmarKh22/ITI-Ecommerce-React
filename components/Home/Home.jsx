@@ -6,36 +6,13 @@ import Card from "react-bootstrap/Card";
 import { FaSearch } from "react-icons/fa";
 import { Riple } from "react-loading-indicators";
 import { useNavigate } from "react-router-dom";
-import useProducts from "../../Hooks/useProducts";
+import { useProducts } from "../../Context/ProductContext";
 
 const Home = () => {
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  const [data, setData] = useState([]);
   const [search, setSearch] = useState([]);
-  const { products: filteredProducts, loading, error } = useProducts(search);
+  const { products: filteredProducts, loading, error } = useProducts();
 
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get("https://fakestoreapi.com/products");
-  //       const data = res.data;
-  //       setData(data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchData();
-  //   console.log(data);
-  // }, []);
-
-  // const filteredProducts = useMemo(() => {
-  //   return data.filter((element) => element.title.includes(search));
-  // }, [data, search]);
 
   return (
     <div>

@@ -11,25 +11,33 @@ import NotFound from "../components/NotFound/NotFound";
 import Login from "../components/Login/Login";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import { ToastContainer } from "react-toastify";
+import { ProductProvider } from "../Context/ProductContext";
+import { AuthProvider } from "../Context/AuthContext";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Container className="mt-3">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
+      <AuthProvider>
+        <ProductProvider>
+          <Navbar />
+          <Container className="mt-3">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<NotFound />} />
 
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/productDetails/:id" element={<ProductDetails />} />
-          </Route>
-        </Routes>
-      </Container>
-      <Footer />
-
+              <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route
+                  path="/productDetails/:id"
+                  element={<ProductDetails />}
+                />
+              </Route>
+            </Routes>
+          </Container>
+          <Footer />
+        </ProductProvider>
+      </AuthProvider>
       <ToastContainer
         position="top-right"
         autoClose={3000}
